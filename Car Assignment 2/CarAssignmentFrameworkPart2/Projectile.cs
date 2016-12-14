@@ -7,22 +7,32 @@ using System.Drawing;
 
 namespace CarAssignmentFrameworkPart2
 {
-    class Projectile : Tank
+    class Projectile
     {
+        // Create a private contstant variable for 
+        // the speed of the projectile
         private const int SPEED = 3;
+        
+        // Create a private direction variable for
+        // the direction of the projectile
+        private Direction _facing;
+        
+        // Create a private point variable for
+        // the location of the projectile
+        private Point _location;
 
-        public void Projectile(int x, int y, Direction facing)
+        public Projectile(int x, int y, Direction facing)
         {
-            _row = x;
-            _column = y;
-            _facingDirection = facing;
+            _facing = facing;
+            _location.X = x;
+            _location.Y = y;
         }
 
         public Direction Direction
         {
             get
             {
-                return _facingDirection;
+                return _facing;
             }
         }
 
@@ -30,11 +40,33 @@ namespace CarAssignmentFrameworkPart2
         {
             get
             {
-                return _row;
-                return _column; 
+                return _location;
             }
         }
 
-        
+        public Point Move()
+        {
+            if (_facing == Direction.Up)
+            {
+                _location.X =- SPEED;
+                return _location;
+            }
+            else if (_facing  == Direction.Down)
+            {
+                _location.X =+ SPEED;
+                return _location;
+            }
+            else if (_facing == Direction.Left)
+            {
+                _location.Y =- SPEED;
+                return _location;
+            }
+            else if (_facing == Direction.Right)
+            {
+                _location.Y =+ SPEED;
+                return _location;
+            }
+            return _location;
+        }
     }
 }

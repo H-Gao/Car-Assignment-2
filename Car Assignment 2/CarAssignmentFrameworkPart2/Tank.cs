@@ -10,7 +10,7 @@ namespace CarAssignmentFrameworkPart2
     class Tank : SpecialCar
     {
         public Tank(int row, int column, Direction startDirection)
-            : base(row, column, startDirection)
+            : this(row, column, startDirection, Brushes.Black)
         {
         }
 
@@ -23,7 +23,7 @@ namespace CarAssignmentFrameworkPart2
         {
             _isBroken = MoveSafely(tile);
 
-            if (_isBroken != true)
+            if (_isBroken == false)
             {
                 if (_facingDirection == Direction.Up)
                 {
@@ -44,21 +44,34 @@ namespace CarAssignmentFrameworkPart2
             }
         }
 
-        public abstract bool MoveSafely(MapTile tile)
+        public override bool CanMoveSafely(MapTile tile)
         {
-            if (tile != MapTile.Hole)
+            if (_isBroken == false)
             {
+                if (tile != MapTile.Hole)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public override bool SpecialMove(WorldModel world)
+        {
+            if (IsBroken == false)
+            {
+                Projectile tankShell = new Projectile(Row, Column, FacingDirection);
+
                 return true;
             }
             else
             {
                 return false;
             }
-        }
-
-        public abstract bool SpecialMove(WorldModel world)
-        {
-            Projectile(_row, _column, _facingDirection);
         }
     }
 }
